@@ -1,11 +1,12 @@
 from fastapi import Header, HTTPException
 import jwt
+from config import settings
 
 def auth_middleware(x_auth_token=Header()):
     try:
         if not x_auth_token:
             raise HTTPException(401, "No Auth Token, access denied")
-        verified_token = jwt.decode(x_auth_token, "password_key", ["HS256"])
+        verified_token = jwt.decode(x_auth_token, settings.token_password_key, ["HS256"])
         if not verified_token:
             raise HTTPException(401, "Token verification failed, access denied")
         # get id from the token
