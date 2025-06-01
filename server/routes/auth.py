@@ -41,8 +41,8 @@ def login_user(user: UserLogin, db: Session=Depends(get_db)):
     return {"token": token, "user": user_db}
 
 @router.get("/")
-def current_user_data(db: Session=Depends(get_db), user_dict=Depends(auth_middleware)):
-    user = db.query(User).filter(User.id == user_dict["uid"]).first()
+def current_user_data(db: Session=Depends(get_db), auth_dict=Depends(auth_middleware)):
+    user = db.query(User).filter(User.id == auth_dict["uid"]).first()
     if not user:
         raise HTTPException(404, "User not found!")
     return user
