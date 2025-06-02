@@ -9,4 +9,5 @@ class Favourite(Base):
     user_id: Mapped[str] = mapped_column(TEXT, ForeignKey("users.id"))
     song_id: Mapped[str] = mapped_column(TEXT, ForeignKey("songs.id"))
 
-    song = relationship("Song")
+    song = relationship("Song", back_populates="favourites")
+    user = relationship("User", back_populates="favourites")

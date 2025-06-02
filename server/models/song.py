@@ -1,5 +1,5 @@
 from sqlalchemy import TEXT, VARCHAR
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.base import Base
 
 class Song(Base):
@@ -11,3 +11,5 @@ class Song(Base):
     artist: Mapped[str] = mapped_column(VARCHAR(100))
     song_name: Mapped[str] = mapped_column(VARCHAR(100))
     hex_code: Mapped[str] = mapped_column(VARCHAR(6))
+
+    favourites = relationship("Favourite", back_populates="song")

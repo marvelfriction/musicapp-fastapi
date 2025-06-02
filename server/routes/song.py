@@ -77,7 +77,8 @@ def list_fav_songs(db: Session = Depends(get_db),
                auth_dict=Depends(auth_middleware)):
     user_id = auth_dict["uid"]
     fav_songs = db.query(Favourite).filter(Favourite.user_id == user_id).options(
-        joinedload(Favourite.song)
+        joinedload(Favourite.song),
+        joinedload(Favourite.user)
     ).all()
     if not fav_songs:
         return {"message": "No favourite songs found."}
